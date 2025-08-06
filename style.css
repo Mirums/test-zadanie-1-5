@@ -1,0 +1,187 @@
+html{
+    padding: 0;
+    margin: 0;
+}
+body{
+    padding: 0;
+    margin: 0;
+    background-color: #F8F8F8;
+}
+header{
+    padding: 0;
+    margin: 0;
+}
+h1{
+    padding: 0;
+    margin: 0;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+button{
+    all: unset;
+    cursor: pointer;
+}
+@font-face {
+    font-family: TT-Lakes;
+    src: url(fonts/TTLakes-Regular.woff);
+    font-weight: 400;
+}
+@font-face {
+    font-family: TT-Lakes;
+    src: url(fonts/TTLakes-DemiBold.woff);
+    font-weight: 500;
+}
+/* оболочка */
+.header{
+    padding-left: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background-color: #FFFFFF;
+    margin-bottom: 32px;
+}
+/* заголовок "ремонт техники различных брендов" */
+.header__title{
+    font-family: TT-Lakes;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #7E7E82;
+    font-weight: 400;
+}
+/* Мобилки */
+    @media (max-width: 768px) {
+           /* тело всей карусели */
+    .swiper{
+    position: relative;
+    padding-top: 16px;
+    width: 100%;
+    height: 100%;
+    overflow: visible !important;
+    max-width: 768px;
+    }
+    /* градиент */
+    .swiper::before{
+    content: "";
+    display: block;
+    width: 24px;
+    height: 72px;
+    background-image: linear-gradient(to left, #F8F8F8, #F8F8F800);
+    position: absolute;
+    top: px;
+    right: 0;
+    z-index: 10;
+    }
+      .swiper-wrapper {
+        display: flex;
+        flex-direction: row;
+        width: auto;
+    }
+    /* стиль для всех слайдов */
+    .swiper-slide{
+        background-color: #FFFFFF;
+        border: 1px solid #EAEAEA;
+        border-radius: 8px;
+        margin-left: 16px;
+        width: auto;
+    }
+    /* активная пуля */
+    .swiper-pagination-bullet-active{
+        background: #B5B6BC !important;
+    }
+    /* неактивная пуля */
+    .swiper-pagination-bullet{
+        background: #DDDDDD !important;
+    }
+    .main-carousel__button{
+        display: none;
+    }
+}
+    @media (min-width) {
+        .swiper{
+            display: flex;
+            width: 100px;
+            flex-wrap: wrap;
+        }
+        .swiper-slide{
+            display: flex;
+            width: 100px;
+
+        }
+    }
+/* кнопки пунктов */
+.service-list__button{
+    display: block;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: 16px;
+    width: 45px;
+    height: 45px;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='1' y='1' width='38' height='38' rx='19' stroke='%23FF3E79' stroke-width='2'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M21.5 20L17.7071 16.2071C17.3166 15.8166 17.3166 15.1834 17.7071 14.7929L17.7929 14.7071C18.1834 14.3166 18.8166 14.3166 19.2071 14.7071L23.7929 19.2929C24.1834 19.6834 24.1834 20.3166 23.7929 20.7071L19.2071 25.2929C18.8166 25.6834 18.1834 25.6834 17.7929 25.2929L17.7071 25.2071C17.3166 24.8166 17.3166 24.1834 17.7071 23.7929L21.5 20Z' fill='%23FF3E79'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+}
+/* анимация кнопок */
+.service-list__button:hover{
+    transition-duration: 1s;
+    transform: scale(1.1);
+}
+/* общий стиль логотипов */
+.swiper-slide--type-logo{
+    background-position: 16px 20px;
+    background-repeat: no-repeat;
+}
+.swiper-slide--brand-lenovo{
+    background-image: url(icons/lenovo.png);
+}
+.swiper-slide--brand-samsung{
+    background-image: url(icons/samsung.png);
+}
+.swiper-slide--brand-apple{
+    background-position: 16px 12px;
+    background-image: url(icons/apple.png);
+}
+.swiper-slide--brand-viewsonic{
+    background-image: url(icons/viewsonic.png);
+}
+.swiper-slide--brand-bosch{
+    background-image: url(icons/bosch.png);
+}
+.swiper-slide--brand-hp{
+    background-image: url(icons/hp.png);
+}
+.swiper-slide--brand-acer{
+    background-image: url(icons/acer.png);
+}
+.swiper-slide--brand-sony{
+    background-image: url(icons/sony.png);
+}
+
+
+ 
+/*кнопка читать далее*/
+.main-carousel__button{
+    position: relative;
+    font-family: TT-Lakes;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1B1C21;
+    margin-left: 63px;
+} 
+/* анимация кнопки */
+ .main-carousel__button:hover{
+    transition-duration: 1s;
+    transform: scale(1.1);
+} 
+/* иконка читать далее */
+ .main-carousel__button::before{
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-image: url(icons/read-more.svg); 
+  position: absolute; 
+  left: -20px;
+  top: 5px;
+  background-repeat: no-repeat;
+}  
