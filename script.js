@@ -1,68 +1,75 @@
 let swiperInstance = null;
+let currentMode = null;
 
 function destroySwiperCompletely() {
-  if (swiperInstance) {
-    console.log('🔥 Начинаю уничтожение Swiper');
-    swiperInstance.destroy(true, true);
-    swiperInstance = null;
-    
-    const slides = document.querySelectorAll('.swiper-slide');
-    console.log(`🔄 Восстанавливаю ${slides.length} слайдов`);
-    slides.forEach(slide => {
-      slide.style.width = '';
-      slide.style.height = '';
-      slide.style.flexShrink = '';
-    });
-    
-    const container = document.querySelector('.swiper');
-    if (container) {
-      container.style.overflow = '';
-      container.style.transform = '';
-      container.classList.remove('swiper-initialized', 'swiper-horizontal');
-      console.log('✅ Контейнер восстановлен');
-    }
-    
-    const pagination = document.querySelector('.swiper-pagination');
-    if (pagination) {
-      pagination.style.display = 'none';
-      console.log('❌ Пагинация скрыта');
-    }
-    console.log('🛑 Swiper полностью уничтожен');
-  } else {
-    console.log('ℹ️ Нет активного экземпляра Swiper для уничтожения');
-  }
+if (swiperInstance) {
+  swiperInstance.destroy(true, true); 
+  swiperInstance = null;
+}
+}
+function getActualWidth() {
+  return window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth;
 }
 
-function getActualWidth() {
-  const width = window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth;
-  console.log(`📏 Определение ширины: 
-  visualViewport: ${window.visualViewport?.width} 
-  innerWidth: ${window.innerWidth} 
-  clientWidth: ${document.documentElement.clientWidth}
-  Итог: ${width}`);
-  return width;
+function setupDesktopMode() {
+  const wrapper = document.querySelector('.swiper-wrapper');
+  if (wrapper) {
+      wrapper.classList.add("custom-desktop")
+  }
+  
+  const slides = document.querySelectorAll('.swiper-slide');
+  slides.forEach(slide => {
+    slide.classList.add('custom-desktop');
+  });
+  
+  const pagination = document.querySelector('.swiper-pagination');
+  if (pagination) {
+    pagination.style.display = 'none';
+  }
+  
+  currentMode = 'desktop';
+}
+
+function setupMobileMode() {
+  const container = document.querySelector('.swiper');
+  if (container) {
+      container.classList.add('custom-mobile')
+  }
+  
+  const wrapper = document.querySelector('.swiper-wrapper');
+  if (wrapper) {
+      wrapper.classList.add('custom-mobile')
+  }
+  
+  const slides = document.querySelectorAll('.swiper-slide');
+  slides.forEach(slide => {
+      slide.classList.add('custom-mobile');
+  });
+  
+  const pagination = document.querySelector('.swiper-pagination');
+  if (pagination) {
+      pagination.classList.add('custom-mobile');
+    }
+  
+  currentMode = 'mobile';
 }
 
 function initSwiperIfMobile() {
   const windowWidth = getActualWidth();
-  const isMobile = windowWidth <= 768;
-  console.log(`📱 Состояние: ${windowWidth}px, ${isMobile ? 'Мобильный режим' : 'Десктопный режим'}`);
+  const isMobile = windowWidth <= 767;
+  
 
-  // Уничтожаем Swiper при переходе в десктопный режим
-  if (!isMobile && swiperInstance) {
-    console.log('🖥️ Обнаружен переход в десктопный режим');
-    destroySwiperCompletely();
+  
+  if ((isMobile && currentMode === 'mobile') || (!isMobile && currentMode === 'desktop')) {
+    return;
   }
-  // Или если остались артефакты Swiper в мобильном режиме
-  else if (isMobile && windowWidth > 768 && swiperInstance) {
-    console.log('⚠️ Обнаружена рассинхронизация режимов');
-    destroySwiperCompletely();
-  }
-
-  // Создаем Swiper только если нужно
-  if (isMobile && !swiperInstance) {
-    console.log('📱 Инициализация нового Swiper');
+  
+  if (isMobile) {
     
+    destroySwiperCompletely();
+    
+    setupMobileMode();
+  
     swiperInstance = new Swiper('.swiper', {
       slidesPerView: 'auto',
       direction: 'horizontal',
@@ -71,24 +78,18 @@ function initSwiperIfMobile() {
       pagination: {
         el: '.swiper-pagination',
         clickable: true
-      },
-      on: {
-        init: function() {
-          console.log('🎉 Swiper инициализирован');
-        }
       }
     });
-
-    document.querySelectorAll('.swiper-slide').forEach(slide => {
-      slide.style.width = '240px';
-      slide.style.height = '72px';
-    });
-
-    const pagination = document.querySelector('.swiper-pagination');
-    if (pagination) {
-      pagination.style.display = 'flex';
-      console.log('🔘 Пагинация активирована');
-    }
+    
+    currentMode = 'mobile';
+  } 
+  else {
+    
+    destroySwiperCompletely();
+    
+    setupDesktopMode();
+    
+    currentMode = 'desktop';
   }
 }
 
@@ -96,15 +97,30 @@ let resizeTimeout;
 function handleResize() {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
-    console.log('\n=== НОВЫЙ РЕСАЙЗ ===');
     initSwiperIfMobile();
   }, 100);
 }
 
-// Инициализация
-console.log('🚀 Запуск приложения');
-window.addEventListener('load', initSwiperIfMobile);
+window.addEventListener('load', () => {
+  initSwiperIfMobile();
+  window.addEventListener('orientationchange', handleResize);
+});
 window.addEventListener('resize', handleResize);
 
-// Первый запуск
 initSwiperIfMobile();
+
+//кнопка читать далее
+const swiper = document.getElementById('swiper');
+const button = document.getElementById('toggleButton');
+
+  button.addEventListener('click', function() {
+    swiper.classList.toggle('swiper-expanded');
+    button.classList.toggle('active');
+
+    if (swiper.classList.contains('swiper-expanded')) {
+      button.textContent = 'Скрыть';
+    } 
+    else {
+      button.textContent = 'Показать все'
+    }
+  });

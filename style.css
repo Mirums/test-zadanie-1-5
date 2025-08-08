@@ -6,6 +6,7 @@ body{
     padding: 0;
     margin: 0;
     background-color: #F8F8F8;
+    z-index: 1;
 }
 header{
     padding: 0;
@@ -36,29 +37,36 @@ button{
 }
 /* оболочка */
 .header{
-    padding-left: 32px;
-    padding-top: 16px;
-    padding-bottom: 16px;
     background-color: #FFFFFF;
     margin-bottom: 32px;
+    width: 100%;
 }
 /* заголовок "ремонт техники различных брендов" */
 .header__title{
+    padding-bottom: 16px;
+    padding-top: 16px;
+    padding-left: 32px;
     font-family: TT-Lakes;
     text-transform: uppercase;
     font-size: 16px;
     color: #7E7E82;
     font-weight: 400;
 }
+    /* стиль для всех слайдов */
+    .swiper-slide{
+        background-color: #FFFFFF;
+        border: 1px solid #EAEAEA;
+        border-radius: 8px;
+        margin-left: 16px;
+    }
 /* Мобилки */
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
            /* тело всей карусели */
     .swiper{
     position: relative;
     padding-top: 16px;
-    width: 100%;
-    height: 100%;
     max-width: 768px;
+    overflow: hidden !important;
     }
     /* градиент */
     .swiper::before{
@@ -77,15 +85,11 @@ button{
         flex-direction: row;
         width: auto;
     }
-    /* стиль для всех слайдов */
-    .swiper-slide{
-        background-color: #FFFFFF;
-        border: 1px solid #EAEAEA;
-        border-radius: 8px;
-        margin-left: 16px;
-        width: auto;
+
+    .main-carousel__button{
+    display: none;
     }
-    /* активная пуля */
+      /* активная пуля */
     .swiper-pagination-bullet-active{
         background: #B5B6BC !important;
     }
@@ -93,20 +97,31 @@ button{
     .swiper-pagination-bullet{
         background: #DDDDDD !important;
     }
-    .main-carousel__button{
-        display: none;
     }
-}
-    @media (min-width) {
+/* Компьютер 768 */
+    @media (min-width: 768px) and (max-width: 1119px) {
         .swiper{
-            display: flex;
-            width: 100px;
-            flex-wrap: wrap;
+            max-height: 165px;
+            transition: max-height 0.3s ease;
+            padding-left: 32px;
+        }
+        .swiper-expanded{
+            max-height: 1000px;
         }
         .swiper-slide{
-            display: flex;
-            width: 100px;
-
+            width: 224px !important;
+            margin: 0 !important;
+        }
+    }
+/* Компьютер 1120 */
+    @media (min-width: 1120px) {
+                .swiper{
+            max-height: 165px;
+            transition: max-height 0.3s ease;
+            padding-left: 32px;
+        }
+        .swiper-expanded{
+            max-height: 300px;
         }
     }
 /* кнопки пунктов */
@@ -155,9 +170,6 @@ button{
 .swiper-slide--brand-sony{
     background-image: url(icons/sony.png);
 }
-
-
- 
 /*кнопка читать далее*/
 .main-carousel__button{
     position: relative;
@@ -166,6 +178,7 @@ button{
     font-weight: 500;
     color: #1B1C21;
     margin-left: 63px;
+    padding-top: 24px;
 } 
 /* анимация кнопки */
  .main-carousel__button:hover{
@@ -181,6 +194,43 @@ button{
   background-image: url(icons/read-more.svg); 
   position: absolute; 
   left: -20px;
-  top: 5px;
+  top: 29px;
   background-repeat: no-repeat;
 }  
+ .main-carousel__button.active::before{
+  background-image: url(icons/hidden-more.svg); 
+}  
+.swiper-wrapper.custom-desktop{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 0;
+    overflow: visible;
+}
+.swiper-slide.custom-desktop{
+    width: 240px;
+    height: 72px;
+    margin-left: 0;
+}
+.swiper.custom-mobile{
+    overflow: hidden;
+    padding-bottom: 40px;
+}
+.swiper-wrapper.custom-mobile{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
+    padding: 0;
+}
+.swiper-slide.custom-mobile{
+    width: 240px;
+    height: 72px;
+    margin-left: 16px;
+}
+.swiper-pagination.custom-mobile{
+    position: absolute;
+    bottom: 14px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
